@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 - Request</title>
+</head>
+<body>
+    <button id="btn-get-word">Obtain a random word from</button>
+    <br>
+    <h2> Random word:: <span id="random-word"></span></h2>
+    <br>
+    <button id="btn-db-interaction">Fill select with databases available in localhost</button>
+    <br>
+    <select id="user-list"></select>
+
+    <script src="requests.js"></script>
+    <script>
+        const wordSpace = document.getElementById('random-word');
+        const dbList = document.getElementById('user-list');
+        const btnGetWord = document.getElementById('btn-get-word');
+        const btnDbInteraction = document.getElementById('btn-db-interaction');
+        const inputFieldSearch = document.getElementById('search-videogame');
+        const btnActionSearch = document.getElementById('btn-search-in-db');
+        const searchResult = document.getElementById('search-result');
+
+        const req = new Requests();
+
+        const fillWithDatabases = _dbs => {
+            for (const db of _dbs){
+                const newOptionDB = document.createElement('option');
+                newOptionDB.innerText = db;
+                newOptionDB.value = db;
+                dbList.appendChild(newOptionDB);
+            }
+        }
+
+        btnGetWord.addEventListener('click',ev => {
+            ev.preventDefault();
+            wordSpace.innerText = req.createRequestTo('./services/rand.php').word;
+        });
+        btnDbInteraction.addEventListener('click',ev => {
+            ev.preventDefault();
+            const dbList = req.createRequestTo('./services/getUsers.php').db;
+            fillWithDatabases(dbList);
+        });
+    </script>
+</body>
+</html>
