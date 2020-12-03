@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB - Fetch - VPS</title>
+</head>
+<body>
+    <script>
+        const dir = 'http://vps-f87b433e.vps.ovh.net/php-actv/fetch/getAvalaibleDatabases.php';
+        
+        const writeScreen = _array => {
+            for(const element of _array){
+                document.write('<p>'+element+'</p>');
+            }
+        };
+
+        const fetchDatabases = fetch(dir);
+        fetchDatabases.then(resp => resp.json())
+            .then(databases => writeScreen(databases.databases))
+            .catch(error => console.error('Se ha producido un error durante el procesamiento de la petición'));
+    </script>
+</body>
+</html>
