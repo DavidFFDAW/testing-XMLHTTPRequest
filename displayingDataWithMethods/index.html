@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetchers</title>
+</head>
+<body>
+
+    
+    <script src="./fetchMethods.js"></script>
+    <script>//     ↑ ↑ ↑ methods to bring the data to the view, using callbacks
+        // ---------------------------------- URLs -------------------------------------------------------
+        const jsonURL = './data.json';
+        const getDatabasesURL = 'http://vps-f87b433e.vps.ovh.net/php-actv/fetch/getAvalaibleDatabases.php';
+
+
+        // ----------------- Instanciating what to do when receiving the data ----------------------------
+        const consoleDatabaseTable = ({ databases }) => console.table(databases);
+        const writeNames = ({ names }) => document.write('<p><strong>Names: </strong>'+names+'</p>');
+        const writeCharacters = ({ characters }) => document.write('<p><strong>Characters: </strong>'+characters+'</p>');
+        const logNames = ({ names }) => console.log('names:',names );
+        const logCharacters = ({ characters }) => console.log('characters:',characters );
+
+
+        // -------  ↑ Bringing the content to the view using methods on fetchMethods.js ↑ -----------------
+        loadContent(jsonURL,writeNames);
+        asynchronousLoadContent(jsonURL,writeCharacters);
+        asynchronousLoadContent(getDatabasesURL,consoleDatabaseTable);
+    </script>
+</body>
+</html>
