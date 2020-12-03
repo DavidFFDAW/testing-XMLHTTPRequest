@@ -1,0 +1,2 @@
+# No subir todos los archivos de pruebas tontas o que no son realmente necesarios
+test.*.*
