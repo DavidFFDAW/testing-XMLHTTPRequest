@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch - async - Databases</title>
+    <style>
+        .container{
+            width: 90%;
+        }
+        .list{
+            float: top left;
+            width: 40%;
+            border: 3px solid black;
+            background-color: cadetblue;
+            overflow: auto;
+        }
+        .item{
+            position: relative;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid black;
+            padding: 14px;
+            background-color: cornsilk;
+        }
+        .item:hover{
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background-color: crimson;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="list" id="item-list">
+            <button type="button" class="item"></button>
+        </div>
+    </div>
+
+
+    
+    <script>
+        const dir = 'http://vps-f87b433e.vps.ovh.net/php-actv/fetch/getAvalaibleDatabases.php';
+        const itemList = document.getElementById('item-list');
+        
+        const writeScreen = _array => {
+            for(const element of _array){
+                const newItem = document.createElement('div');
+                newItem.textContent = element;
+                newItem.classList.add('item');
+             // newItem.addEventListener('click',funcion...); ←- En caso de querer clickar alguno de los elementos
+                itemList.appendChild(newItem);
+            }
+        };
+        (async function (){
+            const fetchDatabases = fetch(dir);
+            return await fetchDatabases.then(resp => resp.json())
+                .then(databases => writeScreen(databases.databases))
+                .catch(error => console.error('Se ha producido un error durante el procesamiento de la petición'));
+        })();
+    </script>
+</body>
+</html>
